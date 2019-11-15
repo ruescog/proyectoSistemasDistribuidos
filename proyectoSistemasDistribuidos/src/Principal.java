@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -9,14 +8,15 @@ public class Principal {
 	public static void main(String[] args) {
 
 		Scanner in = new Scanner(System.in);
-		String peticion;
+		String peticion, formatos[];
 		File ficheroIntermedio;
 
 		// NUESTRAS COMPONENTES
 		Lector lector;
+		Buscador buscador;
 
 		if (args.length == 0) {
-			System.out.println("Introducir una URL o el nombre y formato de un archivo: ");
+			System.out.print("Introducir una URL o el nombre y formato de un archivo: ");
 			peticion = in.nextLine();
 		} else {
 			peticion = args[1];
@@ -44,7 +44,27 @@ public class Principal {
 				return;
 			}
 		}
-		
+
+		// BUSCAMOS LA INFORMACIÓN DE LA WEB QUE DESEAMOS OBTENER (IMAGENES, VIDEOS ...)
+		System.out.print("Introducir el formato de los archivos que se quiere extraer de " + peticion + ": ");
+		peticion = in.nextLine();
+
+		formatos = peticion.split(",");
+		buscador = new Buscador(ficheroIntermedio);
+		ficheroIntermedio = buscador.buscar(formatos);
+
 		in.close();
+	}
+	
+	public static boolean checkFormat(String linea, String[] formatos) {
+	//CHECKEA QUE LA LINEA CONTIENE ALGUNO DE LOS FORMATOS (FILTROS) DE LA CADENA DE STRINGS FORMATOS.
+
+		for (String formato : formatos) {
+			if (linea.contains(formato)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
