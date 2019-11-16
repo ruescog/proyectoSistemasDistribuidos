@@ -14,6 +14,7 @@ public class Principal {
 		// NUESTRAS COMPONENTES
 		Lector lector;
 		Buscador buscador;
+		Descargador descargador;
 
 		if (args.length == 0) {
 			System.out.print("Introducir una URL o el nombre y formato de un archivo: ");
@@ -53,11 +54,16 @@ public class Principal {
 		buscador = new Buscador(ficheroIntermedio);
 		ficheroIntermedio = buscador.buscar(formatos);
 
+		// DECARGAMOS LOS ARCHIVOS
+		descargador = new Descargador(ficheroIntermedio);
+		descargador.descargar();
+
 		in.close();
 	}
-	
+
 	public static boolean checkFormat(String linea, String[] formatos) {
-	//CHECKEA QUE LA LINEA CONTIENE ALGUNO DE LOS FORMATOS (FILTROS) DE LA CADENA DE STRINGS FORMATOS.
+		// CHECKEA QUE LA LINEA CONTIENE ALGUNO DE LOS FORMATOS (FILTROS) DE LA CADENA
+		// DE STRINGS FORMATOS.
 
 		for (String formato : formatos) {
 			if (linea.contains(formato)) {
