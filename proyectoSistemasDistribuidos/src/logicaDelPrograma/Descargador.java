@@ -10,6 +10,8 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import logicaDeDatos.Replicador;
+
 public class Descargador {
 
 	private File fichero;
@@ -25,10 +27,10 @@ public class Descargador {
 		// DESCARGA TODOS LOS ARCHIVOS QUE PUEDA DE LOS CUALES CONTIENE LA INFORMACION
 		// EN EL FICHERO QUE LO DEFINE
 
-		String img, file;
+		String img, file, formato;
 		URL url;
 		byte[] buff = new byte[1024 * 32];
-		int leidos, indiceBarra, indiceInterrogante;
+		int leidos, indiceBarra, indiceInterrogante, multiplicidad;
 
 		try (DataInputStream fis = new DataInputStream(new FileInputStream(this.fichero));) {
 
@@ -56,8 +58,18 @@ public class Descargador {
 														// TODA LA CADENA
 				}
 
+				file = file.substring(indiceBarra, indiceInterrogante); // EL NOMBRE DE FICHERO (QUE SE GENERARÁ)
+				multiplicidad = Replicador.añadirDato(file);
+				if(multiplicidad != 0) { //SI ESTÁ REPETIDO ...
+					formato = file.substring(file.lastIndexOf("."));
+					file = file.substring(0, file.lastIndexOf("."));
+					file = file.concat(" (" + multiplicidad + ")");
+					file = file.concat(formato);
+					
+				}
+
 				try (InputStream in = new BufferedInputStream(url.openStream());
-						FileOutputStream fos = new FileOutputStream(file.substring(indiceBarra, indiceInterrogante));) {
+						FileOutputStream fos = new FileOutputStream(file);) {
 
 					// DESCARGA TODA LA INFORMACIÓN DE LA URL QUE INDICABA LA LINEA DEL FICHERO
 					while ((leidos = in.read(buff)) > 0) {

@@ -4,6 +4,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
+import logicaDeDatos.Replicador;
+
 public class Principal {
 
 	public static void main(String[] args) {
@@ -20,6 +22,7 @@ public class Principal {
 		Lector lector;
 		Buscador buscador;
 		Descargador descargador;
+		Replicador replicador = new Replicador();
 
 		// SI EL NUMERO DE ARGUMENTOS ES 0, SE ENTIENDE QUE ES UNA BUSQUEDA DE URL, SI
 		// ES UNO, SE ENTIENDE QUE ES UN ARCHIVO (POR DEFECTO)
