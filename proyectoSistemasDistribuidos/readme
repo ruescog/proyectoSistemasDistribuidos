@@ -1,9 +1,31 @@
-PROBLEMA:
+FECHA DETECTADO -> FECHA CORREGIDO PROBLEMA:
 	->	descripcion
 	-X-> 	posible	solucion
 	--S--	solucionado usando la solucion -X->
 
-Problema con las descargas:
-	->	si hay dos archivos con el mismo nombre y distintas dimensiones, sobreescribe el anterior.
+(19/11/2019) -> --- Problema de comunicación:
+	-> El usuario debe introducir demasiados datos por teclado. El programa NECESITA dicha interacción para poder avanzar y no se puede
+		utilizar de forma repetitiva.
+	-1->	Utilizar argumentos de entrada del principal para obtener los datos. De esta forma se puede repetir el proceso de descarga y hacer
+		descargas recursivas de datos.
+	-2->	Crear un menú en consola en el que el usuario determine el flujo del programa. PROBLEMA: puede acceder a partes que necesiten un
+		calculo previo y que éste no esté realizado.
+
+(19/11/2019) -> --- Problema de eficiencia:
+	->	El programa no es eficiente: solo usa un hilo a la hora de realizar las tareas.
+	-1->	Utilizar programación multihilo para poder descargar a la vez de distintas webs.
+	-2->	Utilizar programación multihilo para poder descargar varias imagenes a la vez.
+	-3->	Utilizar programación multihilo para poder descargar una imagen en varios trozos.
+
+(19/11/2019) -> --- Problema con la multiplicidad:
+	->	El replicador aporta la funcionalidad de obtener todos los archivos, incluso los más pequeños, que pueden no ser deseados.
+	-1->	Añadir una componente que elimine los archivos que no cumplan unas ciertas caracteristicas.
+	-2->	Añadir una componente que no descargue los archivos que no cumplan unas ciertas caracteristicas (más complicado).
+
+(19/11/2019) -> --- Problema con la carga de páginas:
+	->	Hay páginas que usan carga asíncrona (ajax) y no se puede coger todo su codigo de golpe. 
+
+(19/11/2019) -> (19/11/2019) Problema con las descargas:
+	->	Si hay dos archivos con el mismo nombre y distintas dimensiones, sobreescribe el anterior.
 	-1->	introducir un sistema de replicas
 	--S--	-1->
