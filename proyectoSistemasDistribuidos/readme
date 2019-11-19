@@ -1,7 +1,7 @@
 PROBLEMA:
-	->				descripcion
-	-X-> 			posible	solucion
-	--S--			solucionado usando la solucion -X->
+	->		descripcion
+	-X-> 	posible	solucion
+	--S--	solucionado usando la solucion -X->
 
 Problema con las descargas:
 	->		si hay dos archivos con el mismo nombre y distintas dimensiones, sobreescribe el anterior.
