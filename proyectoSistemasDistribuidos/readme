@@ -1,7 +1,7 @@
 PROBLEMA:
 	->				descripcion
-	--> posible		solucion
-	--SOLUCIONADO--	solucionado
+	--> 			posible	solucion
+	--S--			solucionado
 
 Problema con las descargas:
 	-> si hay dos archivos con el mismo nombre y distintas dimensiones, sobreescribe el anterior.

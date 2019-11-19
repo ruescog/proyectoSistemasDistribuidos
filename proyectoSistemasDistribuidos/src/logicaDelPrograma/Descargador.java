@@ -1,3 +1,4 @@
+package logicaDelPrograma;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
