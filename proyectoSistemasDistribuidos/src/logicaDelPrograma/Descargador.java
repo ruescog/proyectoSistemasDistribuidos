@@ -63,7 +63,6 @@ public class Descargador {
 					// TENEMOS QUE INDICAR QUE TOMARÁ COMO NOMBRE TODA LA CADENA
 					if (indiceInterrogante == -1) {
 						indiceInterrogante = file.length();
-
 					}
 
 					file = file.substring(indiceBarra, indiceInterrogante); // EL NOMBRE DE FICHERO (QUE SE GENERARÁ)
@@ -73,7 +72,6 @@ public class Descargador {
 						file = file.substring(0, file.lastIndexOf("."));
 						file = file.concat(" (" + multiplicidad + ")");
 						file = file.concat(formato);
-
 					}
 
 					try (InputStream in = new BufferedInputStream(url.openStream());
@@ -85,7 +83,7 @@ public class Descargador {
 						}
 
 						fos.flush(); // DE NUEVO, UN FLUSH REDUNDANTE POR EL TRY WITH RESOURCES
-						
+
 						// +1 A ARCHIVOS DESCARGADOS
 						this.archivosDescargados++;
 
@@ -93,30 +91,33 @@ public class Descargador {
 
 						// MENSAJE DE ERROR EN CASO DE QUE HAYA UN PROBLEMA CON LA APERTURA DE LOS
 						// FICHEROS O DEL URL.OPENSTREAM.
-						System.err.println("Ha ocurrido un error inesperado.");
-					}
-					catch (IllegalArgumentException e) {
+						System.err.println("Ha ocurrido un error inesperado con la apertura del fichero " + file + ".");
+					} catch (IllegalArgumentException e) {
 						System.err.println("El protocolo o el host son desconocidos.");
 					}
 				} catch (MalformedURLException e) {
 					// MENSAJE DE ERROR EN CASO DE QUE LA URL NO CUMPLA CON LA SINTAXIS (NO EXISTA)
 					System.err.println("La URL especificada no ha podido ser encontrada.");
-				}
-				finally {
+				} catch (StringIndexOutOfBoundsException e) {
+					System.err.println("La dirección no ha podido ser identificada.");
+				} finally {
 					this.urlInspeccionadas++;
 				}
 			}
 
 			// MENSAJE DE INFORMACION
-			System.out.print("Porcentaje de éxito de descarga: "
-					+ this.archivosDescargados * 100.0 / this.urlInspeccionadas + "%.");
-			System.out.println(" Descargado: " + this.archivosDescargados + ", inspeccionados: " + this.urlInspeccionadas);
-			System.out.println("Descarga de imagenes terminada.");
+			if (this.urlInspeccionadas != 0) {
+				System.out.print("Porcentaje de éxito de descarga: "
+						+ this.archivosDescargados * 100.0 / this.urlInspeccionadas + "%.");
+				System.out.print(" Descargado: " + this.archivosDescargados + ", inspeccionados: "
+						+ this.urlInspeccionadas + ".");
+				System.out.println(" Descarga de imagenes terminada.");
+			}
 		} catch (IOException ex1) {
 
 			// MENSAJE DE ERROR EN CASO DE QUE HAYA UN PROBLEMA CON LA APERTURA DE LOS
 			// FICHEROS O DEL URL.OPENSTREAM.
-			System.err.println("Ha ocurrido un error inesperado.");
+			System.err.println("Ha ocurrido un error inesperado con la URL.");
 		}
 	}
 }

@@ -27,6 +27,11 @@ public class Aragna {
 		this.red.addFirst(url);
 	}
 
+	public int getIteraciones() {
+
+		return this.iteraciones;
+	}
+
 	public boolean enredar(String url) {
 
 		if (!(this.red.contains(url) || this.inspeccionadas.contains(url))) {
@@ -51,10 +56,14 @@ public class Aragna {
 						incluir = false;
 					}
 				}
-				if (incluir) {
+				if (incluir && !this.inspeccionadas.contains(linea) && !this.red.contains(linea)) {
+					linea = linea.substring(linea.indexOf("http"));
 					this.red.addLast(linea);
 				}
 			}
+
+			System.out.println("Las URLs han sido enredadas.");
+
 		} catch (Exception e) {
 			System.err.println("Error al añadir una URL a la araña.");
 		}
@@ -64,7 +73,11 @@ public class Aragna {
 
 		String url = null;
 
-		if (!(this.red.isEmpty() || this.iteraciones == 0)) {
+		if (this.red.isEmpty()) {
+			System.out.println("***************************");
+			System.out.println("La red está vacía.");
+			System.out.println("***************************");
+		} else if (this.iteraciones != 0) {
 			url = this.red.getFirst();
 			this.inspeccionadas.add(url);
 			this.red.removeFirst();

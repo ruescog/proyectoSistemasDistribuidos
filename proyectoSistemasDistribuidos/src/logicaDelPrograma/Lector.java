@@ -37,7 +37,7 @@ public class Lector {
 			}
 
 			// MENSAJE DE EXITO
-			System.out.println("La web ha sido leida. El resultado ha sido almacenado en " + f.getName());
+			System.out.println("La web " + this.url.toString() + " ha sido leida. El resultado ha sido almacenado en " + f.getName());
 
 		} catch (UnknownHostException e) {
 
@@ -48,7 +48,7 @@ public class Lector {
 
 			// MENSAJE DE ERROR EN CASO DE QUE HAYA UN PROBLEMA CON LA APERTURA DE LOS
 			// FICHEROS O DEL URL.OPENSTREAM.
-			System.err.println("Ha ocurrido un error inesperado.");
+			System.err.println("Ha ocurrido un error inesperado con la apertura de ficheros.");
 
 		} finally {
 

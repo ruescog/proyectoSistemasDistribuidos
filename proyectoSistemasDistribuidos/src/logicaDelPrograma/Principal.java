@@ -129,6 +129,11 @@ public class Principal {
 		Replicador replicador = new Replicador();
 
 		while ((url = aragna.desenredar()) != null) {
+			
+			System.out.println("***************************");
+			System.out.println("Iteraciones restantes: " + aragna.getIteraciones());
+			System.out.println("***************************");
+			
 			try {
 				//LECTOR
 				lector = new Lector(new URL(url));

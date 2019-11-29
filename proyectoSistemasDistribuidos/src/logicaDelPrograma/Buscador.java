@@ -63,7 +63,7 @@ public class Buscador {
 
 			// MENSAJE DE ERROR EN CASO DE QUE HAYA UN PROBLEMA CON LA APERTURA DE LOS
 			// FICHEROS O DEL URL.OPENSTREAM.
-			System.err.println("Ha ocurrido un error inesperado.");
+			System.err.println("Ha ocurrido un error inesperado con la apertura de ficheros.");
 		}
 
 		return f;
