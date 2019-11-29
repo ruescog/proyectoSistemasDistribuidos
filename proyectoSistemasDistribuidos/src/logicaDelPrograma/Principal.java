@@ -1,40 +1,68 @@
 package logicaDelPrograma;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
+import logicaDeDatos.Aragna;
 import logicaDeDatos.Replicador;
 
 public class Principal {
 
 	public static void main(String[] args) {
-		// DESCARGA LA PAGINA INTRODUCIDA POR TECLADO, FILTRA EL ARCHIVO DESCARGADO O
-		// INDICADO POR EL USUARIO (ARGS[0]) Y DESCARGA LOS ARCHIVOS QUE EN EL SE
-		// ENCUENTREN.
 
-		// VARIABLES
 		Scanner in = new Scanner(System.in);
-		String peticion, formatos[];
-		File ficheroIntermedio;
 
-		// NUESTRAS COMPONENTES
+		String peticion, url, formatos[];
+		int numIteraciones;
+		Aragna aragna;
+
+		// SOLICITA UN MODO DE USO
+		if (args.length == 0) {
+			System.out.print("¿Desea trabajar de forma manual o automática? [m/a]: ");
+			peticion = in.nextLine().toUpperCase();
+
+			if (peticion.equals("M")) {
+				descargaManual();
+			} else {
+				System.out.println("Primera url y cantidad de iteraciones: ");
+
+				System.out.print("	Primera url: ");
+				url = in.nextLine();
+
+				System.out.print("	Introducir el formato de los archivos que se quiere extraer: ");
+				peticion = in.nextLine();
+				
+				System.out.print("	Número de iteraciones: ");
+				numIteraciones = in.nextInt();
+
+				formatos = peticion.split(",");
+				aragna = new Aragna(url, numIteraciones);
+				descargaAutomatica(aragna, formatos);
+			}
+		}
+
+		in.close();
+	}
+
+	public static void descargaManual() {
+
+		// VARIABLES NECESARIAS
+		Scanner in = new Scanner(System.in);
+		File ficheroIntermedio;
+		String peticion, formatos[];
+
+		// COMPONENTES
 		Lector lector;
 		Buscador buscador;
 		Descargador descargador;
 		Replicador replicador = new Replicador();
 
-		// SI EL NUMERO DE ARGUMENTOS ES 0, SE ENTIENDE QUE ES UNA BUSQUEDA DE URL, SI
-		// ES UNO, SE ENTIENDE QUE ES UN ARCHIVO (POR DEFECTO)
-		if (args.length == 0) {
-			System.out.print("Introducir una URL o el nombre y formato de un archivo: ");
-			peticion = in.nextLine();
-		} else {
-			peticion = args[0];
-		}
+		// CODIGO
+		System.out.print("Introducir el nombre y formato de un archivo o una dirección URL: ");
+		peticion = in.nextLine();
 
-		// COMPROBAMOS SI ES UN ARCHIVO O UNA DIRECCION (POR SI EL USUARIO NO HA
-		// INDICADO FICHERO PERO HA INTRODUCIDO UN FICHERO EN VEZ DE UNA URL)
 		ficheroIntermedio = new File(peticion);
 
 		if (ficheroIntermedio.isFile()) {
@@ -55,7 +83,7 @@ public class Principal {
 				// SI EL USUARIO NO QUIERE INTENTAR DE NUEVO, ACABA LA EJECUCION DEL PROGRAMA,
 				// SI QUIERE CONTINUAR, LLAMA DE NUEVO AL MAIN SIN ARGUMENTOS
 				if (peticion.toLowerCase().equals("y")) {
-					main(null);
+					descargaManual();
 				}
 				in.close();
 				return;
@@ -77,10 +105,53 @@ public class Principal {
 		// COMPONENTE ANTERIOR. NOTAR QUE SI EL USUARIO FILTRO UN FORMATO, HABRÁ
 		// DESCARGAS, SI NO, ESTA OPCION NO VALE PARA NADA, SOLO RETRASA AL PROGRAMA
 		// (POSIBLE CORRECCION: SOLICITUD POR TECLADO DE DESCAGAR)
-		descargador = new Descargador(ficheroIntermedio);
-		descargador.descargar();
+		System.out.print("¿Desea descargar las líneas filtradas? [y/n]: ");
+		peticion = in.nextLine().toUpperCase();
+
+		if (peticion.equals("Y")) {
+			descargador = new Descargador(ficheroIntermedio);
+			descargador.descargar();
+		}
 
 		in.close();
+	}
+
+	public static void descargaAutomatica(Aragna aragna, String formatos[]) {
+
+		String url;
+		File ficheroIntermedio;
+		File ficheroLector;
+
+		// COMPONENTES
+		Lector lector;
+		Buscador buscador;
+		Descargador descargador;
+		Replicador replicador = new Replicador();
+
+		while ((url = aragna.desenredar()) != null) {
+			try {
+				//LECTOR
+				lector = new Lector(new URL(url));
+				ficheroLector = lector.leer();
+				ficheroIntermedio = new File(ficheroLector.getAbsolutePath());
+				
+				//BUSCADOR
+				buscador = new Buscador(ficheroIntermedio);
+				ficheroIntermedio = buscador.buscar(formatos);
+				
+				//DESCARGADOR
+				descargador = new Descargador(ficheroIntermedio);
+				descargador.descargar();
+				
+				//ENREDAR
+				buscador = new Buscador(ficheroLector);
+				ficheroLector = buscador.buscar("http");
+				aragna.enredar(ficheroLector, formatos);
+				
+			} catch (MalformedURLException e) {
+				System.err.println("Error con la URL " + url);
+			}
+		}
 	}
 
 	public static boolean checkFormat(String linea, String[] formatos) {

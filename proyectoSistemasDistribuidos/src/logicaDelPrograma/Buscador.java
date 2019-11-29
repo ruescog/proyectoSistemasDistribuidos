@@ -1,4 +1,5 @@
 package logicaDelPrograma;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,6 +17,13 @@ public class Buscador {
 		// CADA COMPONENTE BUSCADOR ESTÁ COMPUESTA POR EL FICHERO QUE VA A FILTRAR
 
 		this.fichero = fichero;
+	}
+
+	public File buscar(String formato) {
+
+		String[] formatos = new String[1];
+		formatos[0] = formato;
+		return this.buscar(formatos);
 	}
 
 	public File buscar(String[] formatos) {
