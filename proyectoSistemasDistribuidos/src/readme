@@ -3,13 +3,14 @@ FECHA DETECTADO -> FECHA CORREGIDO PROBLEMA:
 	-X-> 	posible	solucion
 	--S--	solucionado usando la solucion -X->
 
-(19/11/2019) -> --- Problema de comunicación:
+(19/11/2019) -> (29/11/2019) Problema de comunicación:
 	-> El usuario debe introducir demasiados datos por teclado. El programa NECESITA dicha interacción para poder avanzar y no se puede
 		utilizar de forma repetitiva.
 	-1->	Utilizar argumentos de entrada del principal para obtener los datos. De esta forma se puede repetir el proceso de descarga y hacer
 		descargas recursivas de datos.
 	-2->	Crear un menú en consola en el que el usuario determine el flujo del programa. PROBLEMA: puede acceder a partes que necesiten un
 		calculo previo y que éste no esté realizado.
+	--S-- -2-> Ahora se puede diferenciar entre un flujo manual o automático.
 
 (19/11/2019) -> --- Problema de eficiencia:
 	->	El programa no es eficiente: solo usa un hilo a la hora de realizar las tareas.
@@ -21,8 +22,9 @@ FECHA DETECTADO -> FECHA CORREGIDO PROBLEMA:
 	->	El replicador aporta la funcionalidad de obtener todos los archivos, incluso los más pequeños, que pueden no ser deseados.
 	-1->	Añadir una componente que elimine los archivos que no cumplan unas ciertas caracteristicas.
 	-2->	Añadir una componente que no descargue los archivos que no cumplan unas ciertas caracteristicas (más complicado).
+	--S--	El programa solo descargará X copias de la misma imagen.
 
-(19/11/2019) -> --- Problema con la carga de páginas:
+(19/11/2019) -> (7/12/2019) Problema con la carga de páginas:
 	->	Hay páginas que usan carga asíncrona (ajax) y no se puede coger todo su codigo de golpe. 
 
 (19/11/2019) -> (19/11/2019) Problema con las descargas:

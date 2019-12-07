@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import logicaDeDatos.Aragna;
 import logicaDeDatos.Replicador;
+import logicaDescargador.Descargador;
 
 public class Principal {
 
@@ -15,7 +16,7 @@ public class Principal {
 		Scanner in = new Scanner(System.in);
 
 		String peticion, url, formatos[];
-		int numIteraciones;
+		int numIteraciones, replicas;
 		Aragna aragna;
 
 		// SOLICITA UN MODO DE USO
@@ -37,9 +38,12 @@ public class Principal {
 				System.out.print("	Número de iteraciones: ");
 				numIteraciones = in.nextInt();
 
+				System.out.print("	Número máximo de replicas de un mismo archivo: ");
+				replicas = in.nextInt();
+				
 				formatos = peticion.split(",");
 				aragna = new Aragna(url, numIteraciones);
-				descargaAutomatica(aragna, formatos);
+				descargaAutomatica(aragna, formatos, replicas);
 			}
 		}
 
@@ -57,7 +61,7 @@ public class Principal {
 		Lector lector;
 		Buscador buscador;
 		Descargador descargador;
-		Replicador replicador = new Replicador();
+		Replicador replicador = new Replicador(10);
 
 		// CODIGO
 		System.out.print("Introducir el nombre y formato de un archivo o una dirección URL: ");
@@ -116,7 +120,7 @@ public class Principal {
 		in.close();
 	}
 
-	public static void descargaAutomatica(Aragna aragna, String formatos[]) {
+	public static void descargaAutomatica(Aragna aragna, String formatos[], int replicas) {
 
 		String url;
 		File ficheroIntermedio;
@@ -126,7 +130,7 @@ public class Principal {
 		Lector lector;
 		Buscador buscador;
 		Descargador descargador;
-		Replicador replicador = new Replicador();
+		Replicador replicador = new Replicador(replicas);
 
 		while ((url = aragna.desenredar()) != null) {
 			

@@ -1,4 +1,4 @@
-package logicaDelPrograma;
+package logicaDescargador;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -67,6 +67,11 @@ public class Descargador {
 
 					file = file.substring(indiceBarra, indiceInterrogante); // EL NOMBRE DE FICHERO (QUE SE GENERARÁ)
 					multiplicidad = Replicador.añadirDato(file);
+					
+					if(multiplicidad == -1) {
+						throw new MultiplicityExceededException("Multiplicidad superada: " + img);
+					}
+					
 					if (multiplicidad != 0) { // SI ESTÁ REPETIDO ...
 						formato = file.substring(file.lastIndexOf("."));
 						file = file.substring(0, file.lastIndexOf("."));
@@ -100,6 +105,10 @@ public class Descargador {
 					System.err.println("La URL especificada no ha podido ser encontrada.");
 				} catch (StringIndexOutOfBoundsException e) {
 					System.err.println("La dirección no ha podido ser identificada.");
+				}
+				catch (MultiplicityExceededException e) {
+					System.out.println(e.getMessage());
+					
 				} finally {
 					this.urlInspeccionadas++;
 				}
