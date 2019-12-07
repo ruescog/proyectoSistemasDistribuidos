@@ -18,13 +18,13 @@ FECHA DETECTADO -> FECHA CORREGIDO PROBLEMA:
 	-2->	Utilizar programación multihilo para poder descargar varias imagenes a la vez.
 	-3->	Utilizar programación multihilo para poder descargar una imagen en varios trozos.
 
-(19/11/2019) -> --- Problema con la multiplicidad:
+(19/11/2019) -> (7/12/2019) Problema con la multiplicidad:
 	->	El replicador aporta la funcionalidad de obtener todos los archivos, incluso los más pequeños, que pueden no ser deseados.
 	-1->	Añadir una componente que elimine los archivos que no cumplan unas ciertas caracteristicas.
 	-2->	Añadir una componente que no descargue los archivos que no cumplan unas ciertas caracteristicas (más complicado).
 	--S--	El programa solo descargará X copias de la misma imagen.
 
-(19/11/2019) -> (7/12/2019) Problema con la carga de páginas:
+(19/11/2019) -> --- Problema con la carga de páginas:
 	->	Hay páginas que usan carga asíncrona (ajax) y no se puede coger todo su codigo de golpe. 
 
 (19/11/2019) -> (19/11/2019) Problema con las descargas:
