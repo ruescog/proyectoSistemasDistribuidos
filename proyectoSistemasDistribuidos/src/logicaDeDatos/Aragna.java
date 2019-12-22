@@ -32,17 +32,7 @@ public class Aragna {
 		return this.iteraciones;
 	}
 
-	public boolean enredar(String url) {
-
-		if (!(this.red.contains(url) || this.inspeccionadas.contains(url))) {
-			this.red.addLast(url);
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public void enredar(File fichero, String[] formatos) {
+	public synchronized void enredar(File fichero, String[] formatos) {
 
 		String linea;
 		boolean incluir;
@@ -69,7 +59,7 @@ public class Aragna {
 		}
 	}
 
-	public String desenredar() {
+	public synchronized String desenredar() {
 
 		String url = null;
 

@@ -34,13 +34,13 @@ public class Principal {
 
 				System.out.print("	Introducir el formato de los archivos que se quiere extraer: ");
 				peticion = in.nextLine();
-				
+
 				System.out.print("	Número de iteraciones: ");
 				numIteraciones = in.nextInt();
 
 				System.out.print("	Número máximo de replicas de un mismo archivo: ");
 				replicas = in.nextInt();
-				
+
 				formatos = peticion.split(",");
 				aragna = new Aragna(url, numIteraciones);
 				descargaAutomatica(aragna, formatos, replicas);
@@ -133,30 +133,30 @@ public class Principal {
 		Replicador replicador = new Replicador(replicas);
 
 		while ((url = aragna.desenredar()) != null) {
-			
+
 			System.out.println("***************************");
 			System.out.println("Iteraciones restantes: " + aragna.getIteraciones());
 			System.out.println("***************************");
-			
+
 			try {
-				//LECTOR
+				// LECTOR
 				lector = new Lector(new URL(url));
 				ficheroLector = lector.leer();
 				ficheroIntermedio = new File(ficheroLector.getAbsolutePath());
-				
-				//BUSCADOR
+
+				// BUSCADOR
 				buscador = new Buscador(ficheroIntermedio);
 				ficheroIntermedio = buscador.buscar(formatos);
-				
-				//DESCARGADOR
+
+				// DESCARGADOR
 				descargador = new Descargador(ficheroIntermedio);
 				descargador.descargar();
-				
-				//ENREDAR
+
+				// ENREDAR
 				buscador = new Buscador(ficheroLector);
 				ficheroLector = buscador.buscar("http");
 				aragna.enredar(ficheroLector, formatos);
-				
+
 			} catch (MalformedURLException e) {
 				System.err.println("Error con la URL " + url);
 			}
