@@ -19,9 +19,9 @@ public class Replicador {
 	}
 
 	public static int añadirDato(String linea) {
-	// añade un dato al sistema. en caso de que ya existiera, aumenta en uno su
-	// multiplicidad. en cualquier caso, devuelve un int que indica el numero de
-	// copia del actual elemento - 1
+		// añade un dato al sistema. en caso de que ya existiera, aumenta en uno su
+		// multiplicidad. en cualquier caso, devuelve un int que indica el numero de
+		// copia del actual elemento - 1
 
 		Integer multiplicidad;
 		int copia;

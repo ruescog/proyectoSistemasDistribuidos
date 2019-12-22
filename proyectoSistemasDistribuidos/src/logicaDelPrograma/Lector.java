@@ -41,7 +41,8 @@ public class Lector {
 			}
 
 			// mensaje de exito
-			System.out.println("La web " + this.url.toString() + " ha sido leida. El resultado ha sido almacenado en " + f.getName());
+			System.out.println("La web " + this.url.toString() + " ha sido leida. El resultado ha sido almacenado en "
+					+ f.getName());
 
 		} catch (UnknownHostException e) {
 
