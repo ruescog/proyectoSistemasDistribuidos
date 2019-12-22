@@ -1,4 +1,8 @@
+/* Dada una URL, esta componente del proyecto se encarga de obtener su código fuente para tratarlo posteriormente.
+ */
+
 package logicaDelPrograma;
+
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.File;
@@ -13,15 +17,15 @@ public class Lector {
 	private URL url;
 
 	public Lector(URL url) {
-		// CADA COMPONENTE LECTOR ESTA COMPUESTA POR LA URL QUE DEBE LEER
+		// cada componente lector esta compuesta por la url que debe leer
 
 		this.url = url;
 	}
 
 	public File leer() {
-		// GENERA UN FICHERO INTERMEDIO DE LECTURA, EN EL QUE GUARDARÁ, ÍNTEGRA (POSIBLE
-		// REUTILIZACION) EL CODIGO FUENTE AL QUE TENGA ACCESO DE LA URL CON LA QUE SE
-		// CREÓ
+		// genera un fichero intermedio de lectura, en el que guardará, íntegra (posible
+		// reutilizacion) el codigo fuente al que tenga acceso de la url con la que se
+		// creó
 
 		File f = new File("lector.txt");
 		String linea;
@@ -29,25 +33,25 @@ public class Lector {
 		try (DataInputStream dis = new DataInputStream(this.url.openStream());
 				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f)));) {
 
-			// LEE LINEA POR LINEA (POSIBLEMENTE NO SEAN "LINEAS" COMO EL USUARIO CREE QUE
-			// ES UNA LINEA) Y ALMACENA LA INFORMACIÓN SIN MODIFICAR EN EL FICHERO
+			// lee linea por linea (posiblemente no sean "lineas" como el usuario cree que
+			// es una linea) y almacena la información sin modificar en el fichero
 			// lector.txt
 			while ((linea = dis.readLine()) != null) {
 				bw.write(linea + "\r\n");
 			}
 
-			// MENSAJE DE EXITO
+			// mensaje de exito
 			System.out.println("La web " + this.url.toString() + " ha sido leida. El resultado ha sido almacenado en " + f.getName());
 
 		} catch (UnknownHostException e) {
 
-			// MENSAJE DE ERROR EN CASO DE QUE LA URL NO SEA ENCONTRADA (NO EXISTA)
+			// mensaje de error en caso de que la url no sea encontrada (no exista)
 			System.err.println("El host indicado no ha podido ser encontrado.");
 
 		} catch (IOException e) {
 
-			// MENSAJE DE ERROR EN CASO DE QUE HAYA UN PROBLEMA CON LA APERTURA DE LOS
-			// FICHEROS O DEL URL.OPENSTREAM.
+			// mensaje de error en caso de que haya un problema con la apertura de los
+			// ficheros o del url.openstream.
 			System.err.println("Ha ocurrido un error inesperado con la apertura de ficheros.");
 
 		} finally {

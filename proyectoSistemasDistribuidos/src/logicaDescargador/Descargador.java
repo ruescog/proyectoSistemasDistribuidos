@@ -1,3 +1,6 @@
+/* Esta componente se encarga de, dado un archivo con ficheros para descargar, efectivamente descargar todas aquellas que pueda.
+ */
+
 package logicaDescargador;
 
 import java.io.DataInputStream;
@@ -14,8 +17,8 @@ public class Descargador {
 	public int archivosDescargados;
 
 	public Descargador(File fichero) {
-		// CADA COMPONENTE DESCARGADOR ESTÁ COMPUESTA POR EL FICHERO DEL CUAL VA A
-		// DESCARGAR SUS LINEAS
+		// cada componente descargador está compuesta por el fichero del cual va a
+		// descargar sus lineas
 
 		this.fichero = fichero;
 		urlInspeccionadas = 0;
@@ -33,12 +36,12 @@ public class Descargador {
 				poolDeHilos.execute(new DescargadorConcurrente(this, img));
 			}
 		} catch (IOException e) {
-			// MENSAJE DE ERROR EN CASO DE QUE HAYA UN PROBLEMA CON LA APERTURA DE LOS
-			// FICHEROS O DEL URL.OPENSTREAM.
+			// mensaje de error en caso de que haya un problema con la apertura de los
+			// ficheros o del url.openstream.
 
 			System.err.println("Ha ocurrido un error inesperado con la apertura del fichero " + this.fichero + ".");
 		} finally {
-			// MENSAJE DE INFORMACION
+			// mensaje de informacion
 			if (this.urlInspeccionadas != 0) {
 				System.out.print("Porcentaje de éxito de descarga: "
 						+ this.archivosDescargados * 100.0 / this.urlInspeccionadas + "%.");

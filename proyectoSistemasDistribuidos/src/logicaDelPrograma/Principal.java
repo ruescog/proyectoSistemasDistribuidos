@@ -1,3 +1,6 @@
+/* Esta parte es el contacto del programa con el usuario.
+ */
+
 package logicaDelPrograma;
 
 import java.io.File;
@@ -19,7 +22,7 @@ public class Principal {
 		int numIteraciones, replicas;
 		Aragna aragna;
 
-		// SOLICITA UN MODO DE USO
+		// solicita un modo de uso
 		if (args.length == 0) {
 			System.out.print("¿Desea trabajar de forma manual o automática? [m/a]: ");
 			peticion = in.nextLine().toUpperCase();
@@ -52,18 +55,18 @@ public class Principal {
 
 	public static void descargaManual() {
 
-		// VARIABLES NECESARIAS
+		// variables necesarias
 		Scanner in = new Scanner(System.in);
 		File ficheroIntermedio;
 		String peticion, formatos[];
 
-		// COMPONENTES
+		// componentes
 		Lector lector;
 		Buscador buscador;
 		Descargador descargador;
 		Replicador replicador = new Replicador(10);
 
-		// CODIGO
+		// codigo
 		System.out.print("Introducir el nombre y formato de un archivo o una dirección URL: ");
 		peticion = in.nextLine();
 
@@ -73,19 +76,19 @@ public class Principal {
 			ficheroIntermedio = new File(peticion);
 		} else {
 			try {
-				// SI ES UNA URL, INTENTA DESCARGAR SU CODIGO FUENTE, PARA UTILIZARLO DESPUES
+				// si es una url, intenta descargar su codigo fuente, para utilizarlo despues
 				lector = new Lector(new URL(peticion));
 				ficheroIntermedio = lector.leer();
 
 			} catch (MalformedURLException e) {
-				// EN CASO DE QUE EL USUARIO NO INTRODUZCA UNA URL, LANZARÁ DE NUEVO EL PROGRAMA
-				// (FORMA DE TRATAR EL ERROR MALFORMED)
+				// en caso de que el usuario no introduzca una url, lanzará de nuevo el programa
+				// (forma de tratar el error malformed)
 				System.out.println("La cadena introducida no es un archivo ni una URL.");
 				System.out.print("¿Intentar de nuevo? [y/n] ");
 				peticion = in.nextLine();
 
-				// SI EL USUARIO NO QUIERE INTENTAR DE NUEVO, ACABA LA EJECUCION DEL PROGRAMA,
-				// SI QUIERE CONTINUAR, LLAMA DE NUEVO AL MAIN SIN ARGUMENTOS
+				// si el usuario no quiere intentar de nuevo, acaba la ejecucion del programa,
+				// si quiere continuar, llama de nuevo al main sin argumentos
 				if (peticion.toLowerCase().equals("y")) {
 					descargaManual();
 				}
@@ -94,21 +97,21 @@ public class Principal {
 			}
 		}
 
-		// BUSCAMOS LA INFORMACIÓN DE LA WEB QUE DESEAMOS OBTENER (IMAGENES, VIDEOS ...)
+		// buscamos la información de la web que deseamos obtener (imagenes, videos ...)
 		System.out.print("Introducir el formato de los archivos que se quiere extraer de " + peticion + ": ");
 		peticion = in.nextLine();
 
-		// SEPARA LOS FORMATOS INTRODUCIDOS POR EL USUARIO POR COMAS, BUSCA EN EL
-		// FICHERO GENERADO POR LA COMPONENTE ANTERIOR AQUELLAS FILAS QUE CONTENGAN AL
-		// MENOS UN FORMATO QUE EL USUARIO DESEE (ES UN FILTRADO)
+		// separa los formatos introducidos por el usuario por comas, busca en el
+		// fichero generado por la componente anterior aquellas filas que contengan al
+		// menos un formato que el usuario desee (es un filtrado)
 		formatos = peticion.split(",");
 		buscador = new Buscador(ficheroIntermedio);
 		ficheroIntermedio = buscador.buscar(formatos);
 
-		// DECARGA DE LOS ARCHIVOS QUE HAYAN QUEDADO EN EL FICHERO PRODUCIDO POR LA
-		// COMPONENTE ANTERIOR. NOTAR QUE SI EL USUARIO FILTRO UN FORMATO, HABRÁ
-		// DESCARGAS, SI NO, ESTA OPCION NO VALE PARA NADA, SOLO RETRASA AL PROGRAMA
-		// (POSIBLE CORRECCION: SOLICITUD POR TECLADO DE DESCAGAR)
+		// decarga de los archivos que hayan quedado en el fichero producido por la
+		// componente anterior. notar que si el usuario filtro un formato, habrá
+		// descargas, si no, esta opcion no vale para nada, solo retrasa al programa
+		// (posible correccion: solicitud por teclado de descagar)
 		System.out.print("¿Desea descargar las líneas filtradas? [y/n]: ");
 		peticion = in.nextLine().toUpperCase();
 
@@ -122,15 +125,18 @@ public class Principal {
 
 	public static void descargaAutomatica(Aragna aragna, String formatos[], int replicas) {
 
+		// variables
 		String url;
 		File ficheroIntermedio;
 		File ficheroLector;
 
-		// COMPONENTES
+		// componentes
 		Lector lector;
 		Buscador buscador;
 		Descargador descargador;
 		Replicador replicador = new Replicador(replicas);
+
+		// codigo
 
 		while ((url = aragna.desenredar()) != null) {
 
@@ -139,20 +145,20 @@ public class Principal {
 			System.out.println("***************************");
 
 			try {
-				// LECTOR
+				// lector
 				lector = new Lector(new URL(url));
 				ficheroLector = lector.leer();
 				ficheroIntermedio = new File(ficheroLector.getAbsolutePath());
 
-				// BUSCADOR
+				// buscador
 				buscador = new Buscador(ficheroIntermedio);
 				ficheroIntermedio = buscador.buscar(formatos);
 
-				// DESCARGADOR
+				// descargador
 				descargador = new Descargador(ficheroIntermedio);
 				descargador.descargar();
 
-				// ENREDAR
+				// enredar
 				buscador = new Buscador(ficheroLector);
 				ficheroLector = buscador.buscar("http");
 				aragna.enredar(ficheroLector, formatos);

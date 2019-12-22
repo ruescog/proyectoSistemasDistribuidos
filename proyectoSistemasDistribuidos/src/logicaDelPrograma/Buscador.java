@@ -1,3 +1,7 @@
+/* Esta componente se encarga de buscar, en un archivo determinado (que genera otra componente) los formatos introducidos por el usuario. Notar que
+ * "formato" no tiene por qué ser ".*", puede ser también una secuencia de palabras (que después dará fallo en la descarga si está en modo automático).
+ */
+
 package logicaDelPrograma;
 
 import java.io.BufferedReader;
@@ -14,7 +18,7 @@ public class Buscador {
 	private File fichero;
 
 	public Buscador(File fichero) {
-		// CADA COMPONENTE BUSCADOR ESTÁ COMPUESTA POR EL FICHERO QUE VA A FILTRAR
+		// cada componente buscador está compuesta por el fichero que va a filtrar
 
 		this.fichero = fichero;
 	}
@@ -27,9 +31,9 @@ public class Buscador {
 	}
 
 	public File buscar(String[] formatos) {
-		// FILTRA EL ARCHIVO QUE LO IDENTIFICA POR LOS FORMATOS INTRODUCIDOS COMO
-		// PARAMETROS, CREA UN NUEVO DOCUMENTO INTERMEDIO, buscador.txt, QUE CONTIENE LA
-		// INFORMACION FILTRADA, QUE PUEDE SER REUTILIZABLE
+		// filtra el archivo que lo identifica por los formatos introducidos como
+		// parametros, crea un nuevo documento intermedio, buscador.txt, que contiene la
+		// informacion filtrada, que puede ser reutilizable
 
 		File f = new File("buscador.txt");
 		String linea;
@@ -38,31 +42,31 @@ public class Buscador {
 				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f)));) {
 
 			while ((linea = br.readLine()) != null) {
-				// PARTE DOS VECES LA LINEA: UNA POR " Y OTRA POR ', QUE SON DISTINTAS FORMAS DE
-				// SEPARAR INFORMACION EN HTML
+				// parte dos veces la linea: una por " y otra por ', que son distintas formas de
+				// separar informacion en html
 				for (String trozo : linea.split("\"")) {
 					for (String subTrozo : trozo.split("'")) {
 
-						// SI EL RESULTADO CUMPLE ALGUNO DE LOS FORMATOS INDICADOS, LO ALMACENA
+						// si el resultado cumple alguno de los formatos indicados, lo almacena
 						if (Principal.checkFormat(subTrozo, formatos)) {
 
-							// ULTIMA MODIFICACION: POR CODIFICACIÓN DE LAS WEB PUEDE TRATAR EL & POR SU
-							// CODIGO UNICODE (\u0026), POR LO QUE EL BUSCADOR DEBERÁ VOLVER A CAMBIAR ESA
-							// CODIFICACION POR EL CARACTER AL QUE REPRESENTA.
+							// ultima modificacion: por codificación de las web puede tratar el & por su
+							// codigo unicode (\u0026), por lo que el buscador deberá volver a cambiar esa
+							// codificacion por el caracter al que representa.
 							bw.write(subTrozo.replace("\\u0026", "&") + "\r\n");
 						}
 					}
 				}
 			}
-			bw.flush(); // INNECESARIO POR EL TRY WITH RESOURCES, MEJOR DICHO, REDUNDANTE.
+			bw.flush(); // innecesario por el try with resources, mejor dicho, redundante.
 
-			// MENSAJE DE EXITO POR CONSOLA SI SE HA REALIZADO CON ÉXITO.
+			// mensaje de exito por consola si se ha realizado con éxito.
 			System.out.println("Se ha filtrado la petición y se han guardado las coincidencias en " + f.getName());
 
 		} catch (IOException e) {
 
-			// MENSAJE DE ERROR EN CASO DE QUE HAYA UN PROBLEMA CON LA APERTURA DE LOS
-			// FICHEROS O DEL URL.OPENSTREAM.
+			// mensaje de error en caso de que haya un problema con la apertura de los
+			// ficheros o del url.openstream.
 			System.err.println("Ha ocurrido un error inesperado con la apertura de ficheros.");
 		}
 

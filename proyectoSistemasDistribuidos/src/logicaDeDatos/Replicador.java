@@ -1,3 +1,7 @@
+/* Esta componente se encarga de bloquear una descarga si ya se ha descagado el numero maximo (determinado por el usuario) de archivos con ese
+ * nombre.
+ */
+
 package logicaDeDatos;
 
 import java.util.HashMap;
@@ -15,14 +19,14 @@ public class Replicador {
 	}
 
 	public static int añadirDato(String linea) {
-		// AÑADE UN DATO AL SISTEMA. EN CASO DE QUE YA EXISTIERA, AUMENTA EN UNO SU
-		// MULTIPLICIDAD. EN CUALQUIER CASO, DEVUELVE UN INT QUE INDICA EL NUMERO DE
-		// COPIA DEL ACTUAL ELEMENTO - 1
+	// añade un dato al sistema. en caso de que ya existiera, aumenta en uno su
+	// multiplicidad. en cualquier caso, devuelve un int que indica el numero de
+	// copia del actual elemento - 1
 
 		Integer multiplicidad;
 		int copia;
 
-		// EN CASO DE QUE EXISTA YA EL DATO
+		// en caso de que exista ya el dato
 		if (bd.containsKey(linea)) {
 			multiplicidad = bd.get(linea);
 
@@ -36,7 +40,7 @@ public class Replicador {
 
 		} else {
 			bd.put(linea, new Integer(1));
-			return 0; // INDICADOR DE DATO NUEVO
+			return 0; // indicador de dato nuevo
 		}
 	}
 }

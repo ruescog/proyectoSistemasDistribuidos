@@ -1,3 +1,7 @@
+/* Subclase Descargador, su misión es descargar una URL entera en particular, de forma que puedan generarse varios objetos de esta clase y realizar
+ * una descarga concurrente.
+ */
+
 package logicaDescargador;
 
 import java.io.BufferedInputStream;
@@ -16,6 +20,7 @@ public class DescargadorConcurrente implements Runnable {
 
 	public DescargadorConcurrente(Descargador padre, String imgUrl) {
 
+		this.padre = padre;
 		this.imgUrl = imgUrl;
 	}
 
