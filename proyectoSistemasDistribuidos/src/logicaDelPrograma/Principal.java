@@ -24,11 +24,13 @@ public class Principal {
 
 		// solicita un modo de uso
 		if (args.length == 0) {
-			System.out.print("¿Desea trabajar de forma manual o automática? [m/a]: ");
+			System.out.print("¿Desea trabajar de forma manual, manual por defecto o automática? [m/mf/a]: ");
 			peticion = in.nextLine().toUpperCase();
 
 			if (peticion.equals("M")) {
 				descargaManual();
+			} else if (peticion.equals("MF")) {
+				descargaManualDefecto();
 			} else {
 				System.out.println("Primera url y cantidad de iteraciones: ");
 
@@ -120,6 +122,41 @@ public class Principal {
 			descargador.descargar();
 		}
 
+		in.close();
+	}
+
+	public static void descargaManualDefecto() {
+
+		// Extension del metodo anterior para automatizar la descarga manual
+
+		// variables necesarias
+		Scanner in = new Scanner(System.in);
+		File ficheroIntermedio;
+		String formatos[];
+
+		// componentes
+		Lector lector;
+		Buscador buscador;
+		Descargador descargador;
+		Replicador replicador = new Replicador(1, "listaNegra.txt");
+
+		// codigo
+		ficheroIntermedio = new File("lector.txt");
+
+		formatos = new String[2];
+		formatos[0] = ".png";
+		formatos[1] = ".jpg";
+		buscador = new Buscador(ficheroIntermedio);
+		ficheroIntermedio = buscador.buscar(formatos);
+
+		descargador = new Descargador(ficheroIntermedio);
+		descargador.descargar();
+
+		ficheroIntermedio = new File("lector.txt");
+		ficheroIntermedio.delete();
+		ficheroIntermedio = new File("buscador.txt");
+		ficheroIntermedio.delete();
+		
 		in.close();
 	}
 
